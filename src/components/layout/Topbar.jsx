@@ -56,7 +56,7 @@ export function Topbar({ setMobileOpen }) {
       <div className="flex items-center gap-2.5 sm:gap-3">
         {/* View live public site */}
         <a
-          href="http://localhost:3000"
+          href={import.meta.env.VITE_SITE_URL || "https://futuretechniques.com.np"}
           target="_blank"
           rel="noreferrer"
           className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-[#574B66] bg-[#574B66]/10 hover:bg-[#574B66]/15 border border-[#574B66]/25 rounded-xl transition shadow-sm"

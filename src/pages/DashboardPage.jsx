@@ -253,7 +253,7 @@ export function DashboardPage() {
 
         <div className="flex items-center gap-3 text-xs font-semibold">
           <a
-            href="http://localhost:3000"
+            href={import.meta.env.VITE_SITE_URL || "https://futuretechniques.com.np"}
             target="_blank"
             rel="noreferrer"
             className="px-4 py-2 rounded-xl bg-[#574B66]/10 hover:bg-[#574B66]/20 text-[#574B66] border border-[#574B66]/20 flex items-center gap-1.5 transition"

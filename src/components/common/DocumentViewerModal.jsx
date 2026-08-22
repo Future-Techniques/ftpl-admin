@@ -4,13 +4,18 @@ import { X, FileText, Download, ExternalLink, Loader2 } from 'lucide-react';
 export function DocumentViewerModal({ isOpen, onClose, documentUrl, title = 'Document Viewer' }) {
   if (!isOpen || !documentUrl) return null;
 
-  // Ensure relative or clean URL without exposing Supabase
+  // Ensure clean and proper document URL without exposing Supabase
   let cleanUrl = documentUrl;
-  if (cleanUrl.includes('supabase.co')) {
+  const apiUrl = import.meta.env.VITE_API_URL || '/api';
+  const apiBase = apiUrl.replace(/\/api\/?$/, '');
+
+  if (cleanUrl.includes('supabase.co') || cleanUrl.includes('/futuretek-media/')) {
     const filename = cleanUrl.split('/').pop();
-    cleanUrl = `/api/media/document/${filename}`;
+    cleanUrl = `${apiUrl.replace(/\/$/, '')}/media/document/${filename}`;
   } else if (cleanUrl.startsWith('http://localhost:5000')) {
-    cleanUrl = cleanUrl.replace('http://localhost:5000', '');
+    cleanUrl = cleanUrl.replace('http://localhost:5000', apiBase);
+  } else if (cleanUrl.startsWith('/api') && apiUrl.startsWith('http')) {
+    cleanUrl = `${apiBase}${cleanUrl}`;
   }
 
   const isPdf = cleanUrl.toLowerCase().includes('.pdf');
