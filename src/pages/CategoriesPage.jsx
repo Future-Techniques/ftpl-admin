@@ -529,13 +529,16 @@ export function CategoriesPage() {
                     className="w-full px-3.5 py-2.5 bg-white border border-[#E8E2EE] rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#574B66]/20 focus:border-[#574B66]"
                   >
                     <option value="">None (Top-Level Parent Category)</option>
-                    {rootCategories
-                      .filter((c) => !currentCategory || c.id !== currentCategory.id)
-                      .map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.title}
-                        </option>
-                      ))}
+                    {categories
+                      .filter((c) => !currentCategory || (c.id !== currentCategory.id && String(c.parent_category) !== String(currentCategory.id)))
+                      .map((c) => {
+                        const isRoot = !c.parent_category || c.parent_category === '0' || c.parent_category === '';
+                        return (
+                          <option key={c.id} value={c.id}>
+                            {isRoot ? `📁 ${c.title}` : `　└── 📁 ${c.title} (under ${c.parent_title || 'parent'})`}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
 
